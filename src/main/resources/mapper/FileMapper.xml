@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 
+	例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀) -->
+<mapper namespace="com.mmall.dao.FileDao">
+	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
+		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
+	<!-- 根据id查询得到一个user对象 -->
+	<select id="getFileById" parameterType="int"
+			resultType="com.mmall.model.File">
+		select * from sys_file where id=#{id}
+	</select>
+	<select id="getFileByPid" parameterType="int"
+			resultType="com.mmall.model.File">
+		SELECT *,sf.id id,s.id fid FROM sys_proj_filename sf LEFT JOIN sys_file  s ON  s.pid=#{pid} AND sf.id=s.pfid
+	</select>
+	<!--elect sys_file.*,sys_proj_filename.filename pfilename
+	from sys_file,sys_proj_filename where (sys_file.pfid=sys_proj_filename.id and sys_file.pid
+	=#{pid});-->
+	<select id="getFileByUid" parameterType="int"
+			resultType="com.mmall.model.File">
+		select * from sys_file where uid=#{uid}
+	</select>
+	<select id="getFileByFName" parameterType="string"
+			resultType="com.mmall.model.File">
+		select * from sys_file where name=#{fname}
+	</select>
+	<delete id="delectFile" parameterType="com.mmall.model.File">
+		delete from sys_file where
+		id=#{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.mmall.model.File" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		sys_file(uid,location,pid,fname,pfid,size,type,startdate)
+		values(#{uid},#{location},#{pid},#{fname},#{pfid},#{size},#{type},#{startdate})
+	</insert>
+
+	<update id="updateFile" parameterType="com.mmall.model.File"  >
+		update db_file
+		<set>
+			<if test="uid != null">
+				uid=#{uid},
+			</if>
+
+			<if test="location!= null">
+				location=#{location},
+			</if>
+			<if test="size!= null">
+				size=#{size},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>

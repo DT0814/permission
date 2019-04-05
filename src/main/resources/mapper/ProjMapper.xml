@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+	例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀) -->
+<mapper namespace="com.mmall.dao.ProjDao">
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+        resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
+    <!-- 根据id查询得到一个user对象 -->
+    <select id="getProjById" parameterType="int"
+            resultType="com.mmall.model.SysProj">
+        select * from sys_project where id=#{id}
+    </select>
+
+    <select id="getProjByUid" parameterType="int"
+            resultType="com.mmall.model.SysProj">
+        select * from sys_project where uid=#{uid}
+    </select>
+    <select id="getProjByLevel" parameterType="int"
+            resultType="com.mmall.model.SysProj">
+SELECT sys_project.`name`,sys_project.descr,sys_user.username ,sys_dept.`name`  deptName FROM `sys_user`,sys_dept,sys_project WHERE sys_project.uid=sys_user.id
+ and sys_dept.id=sys_user.dept_id and ( sys_project.`level`>#{level} or sys_project.`level`=#{level})
+    </select>
+    <select id="getProjByFName" parameterType="string"
+            resultType="com.mmall.model.SysProj">
+        select * from sys_project where name=#{fname}
+    </select>
+    <delete id="delectProj" parameterType="com.mmall.model.SysProj">
+        delete from sys_project where
+        id=#{id}
+    </delete>
+    <insert id="insertProj" parameterType="com.mmall.model.SysProj" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        sys_project(name,uid,descr,ptid,startdate,level)
+        values(#{name},#{uid},#{descr},#{ptid},#{startdate},#{level })
+    </insert>
+
+    <update id="updatwProjById" parameterType="com.mmall.model.SysProj"  >
+        update sys_project
+        <set>
+            <if test="uid != null">
+                uid=#{uid},
+            </if>
+            <if test="fName != null">
+                fName=#{fName},
+            </if>
+            <if test="location!= null">
+                location=#{location},
+            </if>
+            <if test="size!= null">
+                size=#{size},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

@@ -45,10 +45,11 @@ public class ProjController {
     //查看我的项目
     @RequestMapping("/showMyProj")
     @ResponseBody
-    public ModelAndView getProjById(@RequestParam("userid") int userid, HttpServletRequest request) {
+    public ModelAndView getProjById( HttpServletRequest request) {
+        SysUser user = (SysUser) request.getSession().getAttribute("user");
         ModelAndView mav = new ModelAndView("MyProj");
-        System.out.println("查看id为" + userid + "的项目");
-        List<SysProj> list = projService.getProjById(userid);
+        System.out.println("查看id为" + user.getId() + "的项目");
+        List<SysProj> list = projService.getProjById(user.getId());
         for (int i = 0; i < list.size(); i++) {
             System.out.println("项目名" + list.get(i).getName());
         }
@@ -93,8 +94,9 @@ public class ProjController {
      * */
     @RequestMapping("/showAllProj")
     @ResponseBody
-    public ModelAndView getProjByLevel(@RequestParam("userid") int userid, HttpServletRequest request) {
-        SysUser user = sysUserService.selectByPrimaryKey(userid);
+    public ModelAndView getProjByLevel( HttpServletRequest request) {
+        SysUser user = (SysUser) request.getSession().getAttribute("user");
+       user = sysUserService.selectByPrimaryKey(user.getId());
         String level = sysDeptService.getLevel(user.getDeptId());
         int level1 = 0;
         for (int i = 0; i < level.length(); i++) {
@@ -107,7 +109,7 @@ public class ProjController {
         if(list!=null||list.size()>0){
             for(int i=0;i<list.size();i++)
             {
-                if(list.get(i).getUid()==userid)
+                if(list.get(i).getUid()==user.getId())
                     list.get(i).setIsMy(1);
             }
         }
@@ -184,10 +186,10 @@ public class ProjController {
 
     @RequestMapping("/CreateNewProj")
     @ResponseBody
-    public ModelAndView insertProj(@RequestParam("userid") String userid,
-                                   HttpServletRequest request) {
+    public ModelAndView insertProj( HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("NewProj");
-        mav.addObject("user_id", userid);
+        SysUser user= (SysUser) request.getSession().getAttribute("user");
+        mav.addObject("user_id", user.getId());
         return mav;
     }
 }

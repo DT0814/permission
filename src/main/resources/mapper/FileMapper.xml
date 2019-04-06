@@ -12,7 +12,7 @@
 	</select>
 	<select id="getFileByPidz" parameterType="int"
 			resultType="com.mmall.model.File">
-		SELECT *,sf.id id,s.id fid,uid FROM sys_proj_filename sf LEFT JOIN sys_file  s ON  s.pid=#{pid} AND sf.id=s.pfid
+		SELECT *,sf.id id,s.id fid,uid FROM sys_proj_filename sf LEFT JOIN sys_file  s ON  s.pid=#{pid} AND sf.id=s.pfid order by sf.id
 	</select>
 
 	<select id="getFileByPid" parameterType="int"

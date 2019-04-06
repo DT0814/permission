@@ -14,7 +14,7 @@
 
     <select id="getProjByUid" parameterType="int"
             resultType="com.mmall.model.SysProj">
-        select * from sys_project where uid=#{uid}
+        select  sys_project.* ,sys_proj_type.name ptname from sys_project where uid=#{uid}  and sys_proj_type.id=sys_project.ptid
     </select>
     <select id="getProjByLevel" parameterType="int"
             resultType="com.mmall.model.SysProj">

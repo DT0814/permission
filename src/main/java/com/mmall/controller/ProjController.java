@@ -49,7 +49,7 @@ public class ProjController {
     public JsonData showMyProj(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
         System.out.println("查看id为" + user.getId() + "的项目");
-        List<SysProj> list = projService.getProjById(user.getId());
+        List<SysProj> list = projService.getProjByUid(user.getId());
         for (int i = 0; i < list.size(); i++) {
             System.out.println("项目名" + list.get(i).getName());
         }

@@ -22,7 +22,7 @@ public class ProjService {
 
     //   @Resource
     //  PassageDao passageDao;
-    public List<SysProj> getProjById(int id) {
+    public List<SysProj> getProjByUid(int id) {
         // TODO Auto-generated method stub
         return projDao.getProjByUid(id);
     }

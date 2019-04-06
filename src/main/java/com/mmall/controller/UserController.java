@@ -109,17 +109,17 @@ public class UserController {
 
     @RequestMapping("/updatePass.action")
     @ResponseBody
-    public JsonData updatePass(String oldPassWord, String newPassWord) {
+    public JsonData updatePass(String oldPassWord, String newPassWord, Integer uid) {
         return null;
     }
 
     @RequestMapping("/updateUser.action")
     @ResponseBody
-    public JsonData updateUser(String Username, String telephone, String mail) {
+    public JsonData updateUser(String Username, String telephone, String mail, Integer uid) {
         return null;
     }
 
-    @RequestMapping(value = "/updateuser.action", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateUser.action", method = RequestMethod.POST)
     public ModelAndView updateUser
             (@RequestParam(value = "user_id") String user_id,
              @RequestParam(value = "newusername") String newusername,

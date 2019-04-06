@@ -122,6 +122,8 @@ public class ProjController {
     @ResponseBody
     public JsonData getProjByLevel(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
+        if(user==null)
+            return JsonData.fail("nologin");
         user = sysUserService.selectByPrimaryKey(user.getId());
         String level = sysDeptService.getLevel(user.getDeptId());
         int level1 = 0;

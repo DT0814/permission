@@ -18,7 +18,7 @@
     </select>
     <select id="getProjByLevel" parameterType="int"
             resultType="com.mmall.model.SysProj">
-SELECT sys_project.name,sys_project.descr,sys_user.username,sys_proj_type.name ptname,uid,sys_dept.name  deptName FROM sys_user,
+SELECT sys_project.id, sys_project.name,sys_project.descr,sys_user.username,sys_proj_type.name ptname,uid,sys_dept.name  deptName FROM sys_user,
 sys_dept,sys_proj_type,sys_project WHERE sys_project.uid=sys_user.id and sys_proj_type.id=sys_project.ptid
  and sys_dept.id=sys_user.dept_id and ( sys_project.`level`>#{level} or sys_project.`level`=#{level})
     </select>

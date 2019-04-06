@@ -153,7 +153,6 @@
             el: "#bd",
             data: {
                 projs: {},
-                typeFileName: {},
                 types: {},
                 currentTypeid: {},
             },

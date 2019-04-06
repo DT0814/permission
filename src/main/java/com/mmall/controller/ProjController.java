@@ -39,8 +39,8 @@ public class ProjController {
     public JsonData updateProj(SysProj proj) {
         if (proj.getId() == null || proj.getId() <= 0)
             return JsonData.fail("id is erro!");
-        System.out.println("id:"+proj.getId()+" "+proj.getDescr());
-        return JsonData.success( projService.updatProjById(proj));
+        System.out.println("id:" + proj.getId() + " " + proj.getDescr() + " ptid: " + proj.getPtid());
+        return JsonData.success(projService.updatProjById(proj));
     }
 
     //查看我的项目
@@ -48,11 +48,7 @@ public class ProjController {
     @ResponseBody
     public JsonData showMyProj(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
-        System.out.println("查看id为" + user.getId() + "的项目");
         List<SysProj> list = projService.getProjByUid(user.getId());
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("项目名" + list.get(i).getName());
-        }
         return JsonData.success(list);
     }
 
@@ -122,7 +118,7 @@ public class ProjController {
     @ResponseBody
     public JsonData getProjByLevel(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
-        if(user==null)
+        if (user == null)
             return JsonData.fail("nologin");
         user = sysUserService.selectByPrimaryKey(user.getId());
         String level = sysDeptService.getLevel(user.getDeptId());

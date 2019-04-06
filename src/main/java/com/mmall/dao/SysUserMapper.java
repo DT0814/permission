@@ -33,7 +33,5 @@ public interface SysUserMapper {
 
     List<SysUser> getAll();
 
-    void updateUser(@Param("userid") Integer userid, @Param("newusername") String username,
-                    @Param("newpassword") String password, @Param("newtelephone") String telephone,
-                    @Param("newemail") String email);
+    void updateUser(SysUser sysUser);
 }

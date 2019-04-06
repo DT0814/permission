@@ -224,14 +224,23 @@
     </select>
 
     <!-- 修改个人信息 -->
-    <update id="updateUser" parameterType="map">
+    <update id="updateUser" parameterType="com.mmall.model.SysUser">
         update sys_user
         <set>
-            password=#{newpassword},
-            username=#{newusername},
-            mail=#{newemail},
-            telephone=#{newtelephone}
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="mail != null">
+                mail=#{mail},
+            </if>
+            <if test="telephone != null">
+                telephone=#{telephone},
+            </if>
+
         </set>
-        where id=#{userid}
+        where id=#{id}
     </update>
 </mapper>

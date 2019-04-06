@@ -95,9 +95,9 @@ public class SysUserService {
         return sysUserMapper.getAll();
     }
 
-    public void updateUser(int userid,String username,String password,String telephone,String email)
+    public void updateUser(SysUser sysUser)
     {
-        sysUserMapper.updateUser(userid, username, password, telephone, email);
+        sysUserMapper.updateUser(sysUser);
     }
     public  SysUser selectByPrimaryKey(int id)
     {

@@ -110,16 +110,28 @@ public class UserController {
     @RequestMapping("/updatePass.action")
     @ResponseBody
     public JsonData updatePass(String oldPassWord, String newPassWord, Integer uid) {
-        return null;
+        SysUser user = sysUserService.selectByPrimaryKey(uid);
+        System.out.println("MD5Util.encrypt(oldPassWord):"+MD5Util.encrypt(oldPassWord));
+        if (!user.getPassword().equals(MD5Util.encrypt(oldPassWord)))
+            return JsonData.fail("pass is erro!");
+        String MD5Password = MD5Util.encrypt(newPassWord);
+        user.setPassword(MD5Password);
+        sysUserService.updateUser(user);
+        return JsonData.success(1);
     }
 
     @RequestMapping("/updateUser.action")
     @ResponseBody
-    public JsonData updateUser(String Username, String telephone, String mail, Integer uid) {
-        return null;
+    public JsonData updateUser(SysUser sysUser) {
+        if(sysUser.getId()==null)
+            return JsonData.fail("id is null");
+        System.out.println("sysUser.getId():"+sysUser.getId());
+        System.out.println("sysUser.getUsername():"+sysUser.getUsername());
+        sysUserService.updateUser(sysUser);
+        return JsonData.success(1);
     }
 
-    @RequestMapping(value = "/updateUser.action", method = RequestMethod.POST)
+  /*  @RequestMapping(value = "/updateUser.action", method = RequestMethod.POST)
     public ModelAndView updateUser
             (@RequestParam(value = "user_id") String user_id,
              @RequestParam(value = "newusername") String newusername,
@@ -136,5 +148,5 @@ public class UserController {
         ModelAndView mav = new ModelAndView("../../signin");
         return mav;
     }
-
+*/
 }

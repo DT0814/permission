@@ -83,13 +83,27 @@ public class UserController {
         request.getRequestDispatcher(path).forward(request, response);
     }
 
-    @RequestMapping("/edituser")
-    public ModelAndView editUser(@RequestParam(value = "user_id") String userid) {
-
-        ModelAndView mav = new ModelAndView("editUserpage");
-        mav.addObject("user_id", userid);
-        System.out.println("当前id为" + userid);
+    @RequestMapping("/toUpdatePassword")
+    public ModelAndView toUpdatePassword(int uid, HttpServletRequest request) {
+        request.setAttribute("user_id", uid);
+        ModelAndView mav = new ModelAndView("toUpdatePassword");
         return mav;
+    }
+
+    @RequestMapping("/showPersonal")
+    public ModelAndView showPersonal(int uid, HttpServletRequest request) {
+        request.setAttribute("user_id", uid);
+        ModelAndView mav = new ModelAndView("showPersonal");
+        return mav;
+    }
+
+    @RequestMapping("/getUser.action")
+    public JsonData getUser(Integer uid) {
+        if (null == uid || uid < 0) {
+            return JsonData.fail("uid is null!");
+        }
+        SysUser user = sysUserService.selectByPrimaryKey(uid);
+        return JsonData.success(user);
     }
 
     @RequestMapping(value = "/updateuser.action", method = RequestMethod.POST)

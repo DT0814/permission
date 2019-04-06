@@ -28,10 +28,8 @@
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
                 <li style="float:right">
-                <li><a href="/edituser?user_id=${user_id}"> ${username }</a></li>
+                <li>${username }</li>
                 <li><a href="/logout.page">注销</a></li>
-
-
             </ul>
         </div>
 
@@ -122,11 +120,32 @@
                     </li>
                 </ul>
             </li>
-
-
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text"> 个人信息管理</span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a class="popstyle" href="/toUpdatePassword?uid= ${user_id}" target="_blank">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            密码修改
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a class="popstyle" href="/showPersonal?uid= ${user_id}" target="_blank">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            信息管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- /.nav-list -->
-
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
             <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"
                data-icon2="ace-icon fa fa-angle-double-right"></i>

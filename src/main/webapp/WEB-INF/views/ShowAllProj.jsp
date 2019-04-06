@@ -26,6 +26,7 @@
                 <td>序号</td>
                 <td>项目名</td>
                 <td>创建时间</td>
+                <td>项目类型</td>
                 <td>介绍</td>
                 <td></td>
             </tr>
@@ -35,6 +36,7 @@
                 </td>
                 <td>{{proj.name}}</td>
                 <td> {{ dateFormat(proj.startdate)}}</td>
+                <td>{{proj.ptname}}</td>
                 <td>
                     <template v-if="proj.descr == null">
                         无

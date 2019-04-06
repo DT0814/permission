@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" import="java.util.*" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="v-bind" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,8 +27,11 @@
                 <td>序号</td>
                 <td>项目名</td>
                 <td>创建时间</td>
+                <td>项目类型</td>
                 <td>介绍</td>
-                <td><span class="btn btn-success " v-on:click="createProj()">创建项目</span></td>
+                <td>
+                    <button class="btn btn-success" v-on:click="createProj()">创建项目</button>
+                </td>
             </tr>
             <tr class="row" v-for="(proj,index) in projs" v-cloak>
                 <td>
@@ -35,23 +39,19 @@
                 </td>
                 <td>{{proj.name}}</td>
                 <td> {{ dateFormat(proj.startdate)}}</td>
+                <td>{{proj.ptname}}</td>
                 <td>
-                    <template v-if="proj.desrc==null">
+                    <template v-if="proj.descr == null">
                         无
                     </template>
                     <template v-else>
-                        {{proj.desrc}}
+                        {{proj.descr}}
                     </template>
                 </td>
                 <td>
                     <div class="btn-group" role="group" aria-label="...">
                         <button class="btn btn-primary " v-on:click="updateModal(proj)">修改</button>
-                        <template v-if="proj.isMy">
-                            <a class="btn btn-info " v-bind:href="'/toProj?id='+proj.id">管理</a>
-                        </template>
-                        <template v-else>
-                            <a class="btn btn-info " v-bind:href="'/toOtherProj?id='+proj.id">管理</a>
-                        </template>
+                        <a class="btn btn-info " v-bind:href="'/toProj?id='+proj.id">管理</a>
                         <button class="btn btn-danger" v-on:click="deleteC(proj)">删除</button>
                     </div>
                 </td>
@@ -104,7 +104,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button class="close" data-dismiss="modal">
+                    <button class="close" data-dismiss="modal">&times;
                     </button>
                 </div>
                 <div class="modal-title">
@@ -113,8 +113,27 @@
                 <div class="modal-body" style="overflow-y: scroll">
                     <form id="updateForm">
                         <div class="form-group">
-                            <label>项目类型名</label>
+                            <label>项目名</label>
                             <input class="form-control" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label>项目类型</label>
+                            <select class="form-control" name="ptid">
+                                <template v-for="type in types">
+                                    <template v-if="type.id==currentTypeid">
+                                        <option selected v-bind:v-bind:value="type.id">{{type.name}}</option>
+                                    </template>
+                                    <template v-else>
+                                        <option v-bind:value="type.id">{{type.name}}</option>
+                                    </template>
+                                </template>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>项目介绍</label>
+                            <textarea class="form-control" name="descr" cols="3" rows="3">
+                            </textarea>
                         </div>
                         <div class="text-right">
                             <span class="btn btn-primary" v-on:click="update">提交</span>
@@ -136,19 +155,36 @@
                 projs: {},
                 typeFileName: {},
                 types: {},
+                currentTypeid: {},
             },
             mounted() {
                 this.$options.methods.topage(1);
             },
             methods: {
-                updateModal: function (ty) {
-                    $("#updateForm").find("input[name='id']").val(ty.id);
-                    $("#updateForm").find("input[name='name']").val(ty.name);
+                updateModal: function (proj) {
+                    vu.currentTypeid = proj.ptid;
+                    console.log(vu.currentTypeid);
+                    if (Object.keys(vu.types).length == 0) {
+                        var dse = $("#updateForm").find("select[name='ptid']");
+                        dse.empty();
+                        axios.get('${APP_PATH}/FindAllProjType')
+                            .then(function (response) {
+                                var result = response.data;
+                                if (result.ret) {
+                                    vu.types = result.data;
+                                } else {
+                                    alert(result.msg);
+                                }
+                            });
+                    }
+                    $("#updateForm").find("input[name='id']").val(proj.id);
+                    $("#updateForm").find("input[name='name']").val(proj.name);
+                    $("#updateForm").find("textarea[name='descr']").val(proj.descr);
                     $("#updateModal").modal();
                 },
                 update: function () {
                     var formData = new FormData($("#updateForm")[0]);
-                    axios.post('${APP_PATH}/updateProjType.action', formData)
+                    axios.post('${APP_PATH}/updateProj.action', formData)
                         .then(function (response) {
                             var result = response.data;
                             if (result.ret) {
@@ -162,17 +198,19 @@
                         });
                 },
                 createProj: function () {
-                    var dse = $("#addForm").find("select[name='ptid']");
-                    dse.empty();
-                    axios.get('${APP_PATH}/FindAllProjType')
-                        .then(function (response) {
-                            var result = response.data;
-                            if (result.ret) {
-                                vu.types = result.data;
-                            } else {
-                                alert(result.msg);
-                            }
-                        });
+                    if (Object.keys(vu.types).length == 0) {
+                        var dse = $("#addForm").find("select[name='ptid']");
+                        dse.empty();
+                        axios.get('${APP_PATH}/FindAllProjType')
+                            .then(function (response) {
+                                var result = response.data;
+                                if (result.ret) {
+                                    vu.types = result.data;
+                                } else {
+                                    alert(result.msg);
+                                }
+                            });
+                    }
 
                     $("#addModal").modal();
                 },
@@ -196,14 +234,16 @@
                             vu.projs = response.data.data;
                         });
                 },
-                deleteC: function (ty) {
-                    if (confirm("您确定要删除项目类型" + ty.name + " ?")) {
-                        axios.get('${APP_PATH}/delectProjType.action?id=' + ty.id)
+                deleteC: function (proj) {
+                    if (confirm("您确定要删除项目" + proj.name + " ?")) {
+                        axios.get('${APP_PATH}/delectProj.action?id=' + proj.id)
                             .then(function (response) {
                                 var data = response.data;
                                 if (data.ret) {
                                     alert("删除成功");
                                     vu.$options.methods.topage(1);
+                                } else {
+                                    alert(data.msg);
                                 }
                             })
                     }

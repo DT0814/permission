@@ -25,4 +25,8 @@ public class DeptLevelDto extends SysDept {
     public void setDeptList(List<DeptLevelDto> deptList) {
         this.deptList = deptList;
     }
+
+    public List<DeptLevelDto> getDeptList() {
+        return deptList;
+    }
 }

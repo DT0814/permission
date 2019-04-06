@@ -2,9 +2,11 @@ package com.mmall.controller;
 
 import com.mmall.common.JsonData;
 import com.mmall.dto.DeptLevelDto;
+import com.mmall.model.SysUser;
 import com.mmall.param.DeptParam;
 import com.mmall.service.SysDeptService;
 import com.mmall.service.SysTreeService;
+import com.mmall.util.DeptUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -39,9 +42,15 @@ public class SysDeptController {
 
     @RequestMapping("/tree.json")
     @ResponseBody
-    public JsonData tree() {
+    public JsonData tree(HttpServletRequest request) {
         List<DeptLevelDto> dtoList = sysTreeService.deptTree();
-        return JsonData.success(dtoList);
+        SysUser user = (SysUser) request.getSession().getAttribute("user");
+        if (user.getDeptId() == 1) {
+            return JsonData.success(dtoList);
+        } else {
+            List<DeptLevelDto> deptTree = DeptUtils.getDeptTree(user.getDeptId(), dtoList);
+            return JsonData.success(deptTree);
+        }
     }
 
     @RequestMapping("/update.json")

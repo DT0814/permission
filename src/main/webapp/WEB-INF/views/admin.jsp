@@ -107,7 +107,7 @@
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a class="popstyle" href="/showMyProj" target="_blank">
+                        <a class="popstyle" href="/toMyProj" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
                             我的项目
                         </a>

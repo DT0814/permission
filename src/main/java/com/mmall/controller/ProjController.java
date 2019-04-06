@@ -44,18 +44,23 @@ public class ProjController {
     }
 
     //查看我的项目
-    @RequestMapping("/showMyProj")
+    @RequestMapping("/getMyProj")
     @ResponseBody
-    public ModelAndView getProjById(HttpServletRequest request) {
+    public JsonData showMyProj(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
-        ModelAndView mav = new ModelAndView("MyProj");
         System.out.println("查看id为" + user.getId() + "的项目");
         List<SysProj> list = projService.getProjById(user.getId());
         for (int i = 0; i < list.size(); i++) {
             System.out.println("项目名" + list.get(i).getName());
         }
-        mav.addObject("ProList", list);
-        return mav;
+        return JsonData.success(list);
+    }
+
+    //查看我的项目
+    @RequestMapping("/toMyProj")
+    @ResponseBody
+    public ModelAndView showMyProj() {
+        return new ModelAndView("MyProj");
     }
 
     //查看/上传文件  我的某个项目
@@ -164,9 +169,9 @@ public class ProjController {
      * insertProj.action
      *
      * @param request - HttpRequest对象
-     * @param String  name（项目名字）必传，
+     * @param sysProj name（项目名字）必传，
      *                ptid （项目类型id）必传
-     * @param String  descr（描述） 选传
+     *                descr（描述） 选传
      */
     @RequestMapping("/insertProj.action")
     @ResponseBody

@@ -27,7 +27,7 @@
                 <td>项目名</td>
                 <td>创建时间</td>
                 <td>介绍</td>
-                <td><span class="btn btn-success " v-on:click="createProj()">创建项目</span></td>
+                <td></td>
             </tr>
             <tr class="row" v-for="(proj,index) in projs" v-cloak>
                 <td>
@@ -36,18 +36,26 @@
                 <td>{{proj.name}}</td>
                 <td> {{ dateFormat(proj.startdate)}}</td>
                 <td>
-                    <template v-if="proj.desrc==null">
+                    <template v-if="proj.descr == null">
                         无
                     </template>
                     <template v-else>
-                        {{proj.desrc}}
+                        {{proj.descr}}
                     </template>
                 </td>
                 <td>
                     <div class="btn-group" role="group" aria-label="...">
-                        <button class="btn btn-primary " v-on:click="updateModal(proj)">修改</button>
-                        <a class="btn btn-info " v-bind:href="'/toProj?id='+proj.id" >管理</a>
-                        <button class="btn btn-danger" v-on:click="deleteC(proj)">删除</button>
+
+                        <template v-if="proj.isMy">
+                            <button class="btn btn-primary " v-on:click="updateModal(proj)">修改</button>
+                            <a class="btn btn-info " v-bind:href="'/toProj?id='+proj.id">管理</a>
+                        </template>
+                        <template v-else>
+                            <a class="btn btn-info " v-bind:href="'/toOtherProj?id='+proj.id">查看</a>
+                        </template>
+                        <template v-if="proj.isMy">
+                            <button class="btn btn-danger" v-on:click="deleteC(proj)">删除</button>
+                        </template>
                     </div>
                 </td>
             </tr>

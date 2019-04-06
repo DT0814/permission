@@ -16,6 +16,7 @@ public class SysProj {
     //连表查询时用
     private String username;
     private String deptName;
+    private String ptname;
     //是否是我的项目
     private int isMy=0;
 
@@ -107,5 +108,13 @@ public class SysProj {
 
     public void setIsMy(int isMy) {
         this.isMy = isMy;
+    }
+
+    public String getPtname() {
+        return ptname;
+    }
+
+    public void setPtname(String ptname) {
+        this.ptname = ptname;
     }
 }

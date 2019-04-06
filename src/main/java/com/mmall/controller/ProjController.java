@@ -70,11 +70,12 @@ public class ProjController {
         ModelAndView mav = new ModelAndView("ProJ");
         System.out.println("将要查看项目id" + id);
         SysProj proj = projService.getOneProj(id);
+
         mav.addObject("ProjName", proj.getName());
         mav.addObject("ProjDesc", proj.getDescr());
         mav.addObject("Pid", id);
         return mav;
-    }//查看/上传文件  我的某个项目
+    }
 
     @RequestMapping("/toOtherProj")
     @ResponseBody

@@ -16,7 +16,7 @@
     <div class="header" style="background: rgb(237, 237, 237);margin: 10px">
         <h1 class="page-header" style="font-size: 36px">
             项目管理
-            <small>所有项目</small>
+            <small>我的项目</small>
         </h1>
     </div>
     <div class="row table-responsive" style="text-align: center;background: rgb(237, 237, 237)">
@@ -58,46 +58,13 @@
             </tr>
         </table>
     </div>
-    <!-- 文件名展示 -->
-    <div id="showFileName" class="modal fade">
-        <div class="modal-dialog" style="width: 40%;min-height: 40%">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button v-on:click="addClose" class="close" data-dismiss="modal">&times;
-                    </button>
-                </div>
-                <div class="modal-title">
-                    <h1 class="text-center">文件名列表</h1>
-                </div>
-                <div class="modal-body" style="overflow:auto">
-                    <table class="table table-hover tdWrap" style="text-align: center;table-layout:fixed;">
-                        <tr>
-                            <td>序号</td>
-                            <td>名称</td>
-                            <td><span class="btn btn-success " v-on:click="createFileName()">添加</span></td>
-                        </tr>
-                        <tr v-for="(fn,index) in typeFileName">
-                            <td>{{index+1}}</td>
-                            <td>{{fn.filename}}</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="...">
-                                    <button class="btn btn-primary " v-on:click="updateFileNameModal(fn)">修改</button>
-                                    <button class="btn btn-danger" v-on:click="deleteFileNameC(fn)">删除</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- 添加展示窗口 -->
+    <!-- 创建项目 -->
     <div id="addModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button v-on:click="addClose" class="close" data-dismiss="modal">&times;
+                    <button class="close" data-dismiss="modal">&times;
                     </button>
                 </div>
                 <div class="modal-title">
@@ -106,12 +73,26 @@
                 <div class="modal-body" style="overflow-y: hidden">
                     <form class="form-group" id="addForm">
                         <div class="form-group">
-                            <label>项目类型名</label>
+                            <label>项目名</label>
                             <input class="form-control" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label>项目类型</label>
+                            <select class="form-control" name="ptid">
+                                <template v-for="type in types">
+                                    <option v-bind:value="type.id">{{type.name}}</option>
+                                </template>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>项目介绍</label>
+                            <textarea class="form-control" name="descr" cols="3" rows="3">
+                            </textarea>
                         </div>
                         <div class="text-right">
                             <span class="btn btn-primary" v-on:click="add">提交</span>
-                            <button class="btn btn-danger" data-dismiss="modal" v-on:click="addClose">取消</button>
+                            <button class="btn btn-danger" data-dismiss="modal">取消</button>
                         </div>
                     </form>
                 </div>
@@ -123,7 +104,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button class="close" v-on:click="updateClose" data-dismiss="modal">
+                    <button class="close" data-dismiss="modal">
                     </button>
                 </div>
                 <div class="modal-title">
@@ -137,62 +118,7 @@
                         </div>
                         <div class="text-right">
                             <span class="btn btn-primary" v-on:click="update">提交</span>
-                            <button class="btn btn-danger" data-dismiss="modal" v-on:click="updateClose">取消</button>
-                        </div>
-                        <input type="hidden" name="id">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 添加项目类型文件名 -->
-    <div id="addFileNameModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button v-on:click="addClose" class="close" data-dismiss="modal">&times;
-                    </button>
-                </div>
-                <div class="modal-title">
-                    <h1 class="text-center">添加</h1>
-                </div>
-                <div class="modal-body" style="overflow-y: hidden">
-                    <form class="form-group" id="addFileNameForm">
-                        <div class="form-group">
-                            <label>文件名</label>
-                            <input class="form-control" name="filename"/>
-                        </div>
-                        <div class="text-right">
-                            <span class="btn btn-primary" v-on:click="addFileName">提交</span>
-                            <button class="btn btn-danger" data-dismiss="modal" v-on:click="addClose">取消</button>
-                        </div>
-                        <input type="hidden" name="ptid">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 修改项目类型文件名 -->
-    <div id="updateFileNameModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button class="close" v-on:click="updateClose" data-dismiss="modal">
-                    </button>
-                </div>
-                <div class="modal-title">
-                    <h1 class="text-center">修改</h1>
-                </div>
-                <div class="modal-body" style="overflow-y: scroll">
-                    <form id="updateFileNameForm">
-                        <div class="form-group">
-                            <label>文件名</label>
-                            <input class="form-control" name="filename"/>
-                        </div>
-                        <div class="text-right">
-                            <span class="btn btn-primary" v-on:click="updateFileName">提交</span>
-                            <button class="btn btn-danger" data-dismiss="modal" v-on:click="updateClose">取消</button>
+                            <button class="btn btn-danger" data-dismiss="modal">取消</button>
                         </div>
                         <input type="hidden" name="id">
                     </form>
@@ -209,7 +135,7 @@
             data: {
                 projs: {},
                 typeFileName: {},
-                ptid: {},
+                types: {},
             },
             mounted() {
                 this.$options.methods.topage(1);
@@ -235,16 +161,28 @@
                             }
                         });
                 },
-                createTpye: function () {
+                createProj: function () {
+                    var dse = $("#addForm").find("select[name='ptid']");
+                    dse.empty();
+                    axios.get('${APP_PATH}/FindAllProjType')
+                        .then(function (response) {
+                            var result = response.data;
+                            if (result.ret) {
+                                vu.types = result.data;
+                            } else {
+                                alert(result.msg);
+                            }
+                        });
+
                     $("#addModal").modal();
                 },
                 add: function () {
                     var formData = new FormData($("#addForm")[0]);
-                    axios.post('${APP_PATH}/insertProjType.action', formData)
+                    axios.post('${APP_PATH}/insertProj.action', formData)
                         .then(function (response) {
                             var result = response.data;
                             if (result.ret) {
-                                alert("添加成功");
+                                alert("创建成功");
                                 $("#addModal").modal("hide");
                                 vu.$options.methods.topage(1);
                             } else {
@@ -269,74 +207,6 @@
                                 }
                             })
                     }
-                },
-                showFileNameModal: function (ty) {
-                    vu.ptid = ty.id;
-                    vu.$options.methods.fTopage();
-                    $("#showFileName").modal();
-                },
-                createFileName: function () {
-                    $("#addFileNameForm").find("input[name='ptid']").val(vu.ptid);
-                    $("#addFileNameModal").modal();
-                },
-                addFileName: function () {
-                    var formData = new FormData($("#addFileNameForm")[0]);
-                    axios.post('${APP_PATH}/insertProjFName.action', formData)
-                        .then(function (response) {
-                            var result = response.data;
-                            if (result.ret) {
-                                alert("添加成功");
-                                $("#addFileNameModal").modal("hide");
-                                vu.$options.methods.fTopage(1);
-                            } else {
-                                alert(result.msg)
-                                $("#addFileNameModal").modal("hide");
-                            }
-                        });
-                },
-                updateFileNameModal: function (fn) {
-                    $("#updateFileNameForm").find("input[name='id']").val(fn.id);
-                    $("#updateFileNameForm").find("input[name='filename']").val(fn.filename);
-                    $("#updateFileNameModal").modal();
-                },
-                deleteFileNameC: function (fn) {
-                    if (confirm("您确定要删除项目类型" + fn.filename + " ?")) {
-                        axios.get('${APP_PATH}/delectProjFName.action?id=' + fn.id)
-                            .then(function (response) {
-                                var data = response.data;
-                                if (data.ret) {
-                                    alert("删除成功");
-                                    vu.$options.methods.fTopage(fn.ptid);
-                                }
-                            })
-                    }
-                },
-                updateFileName: function () {
-                    var formData = new FormData($("#updateFileNameForm")[0]);
-                    axios.post('${APP_PATH}/updatProjFNameById.action', formData)
-                        .then(function (response) {
-                            var result = response.data;
-                            if (result.ret) {
-                                alert("更新成功");
-                                $("#updateFileNameModal").modal("hide");
-                                vu.$options.methods.fTopage(1);
-                            } else {
-                                alert(result.msg);
-                                $("#updateFileNameModal").modal("hide");
-                            }
-                        });
-                },
-                fTopage: function () {
-                    axios.get('${APP_PATH}/getProjFNameByPtid.action?ptid=' + vu.ptid)
-                        .then(function (response) {
-                            vu.typeFileName = response.data.data;
-                        });
-                },
-                addClose: function () {
-                    $(".modal-body").scrollTop(0);
-                },
-                updateClose: function () {
-                    $(".modal-body").scrollTop(0);
                 },
                 dateFormat: function (time) {
                     var date = new Date(time);

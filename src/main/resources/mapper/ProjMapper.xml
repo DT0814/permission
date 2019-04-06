@@ -36,20 +36,19 @@ sys_dept,sys_proj_type,sys_project WHERE sys_project.uid=sys_user.id and sys_pro
         values(#{name},#{uid},#{descr},#{ptid},#{startdate},#{level })
     </insert>
 
-    <update id="updatProjById" parameterType="com.mmall.model.SysProj"  >
+    <update id="updatProjById" parameterType="com.mmall.model.SysProj">
         update sys_project
         <set>
-
             <if test="name != null">
                 name=#{name},
             </if>
-            <if test="descr!= null">
+            <if test="descr != null">
                 descr=#{descr},
             </if>
-            <if test="level!= null">
+            <if test="level != null">
                 level=#{level},
             </if>
-            <if test="type!= null">
+            <if test="type != null">
                 type=#{type},
             </if>
 

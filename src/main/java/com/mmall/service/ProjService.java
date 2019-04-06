@@ -26,9 +26,11 @@ public class ProjService {
         // TODO Auto-generated method stub
         return projDao.getProjByUid(id);
     }
-    public void updatProjById(SysProj sysProj) {
+    public int  updatProjById(SysProj sysProj) {
         // TODO Auto-generated method stub
-        projDao.updatProjById(sysProj);
+
+
+        return  projDao.updatProjById(sysProj);
     }
     public void insertProj(SysProj proj) {
         // TODO Auto-generated method stub

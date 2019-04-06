@@ -39,8 +39,8 @@ public class ProjController {
     public JsonData updateProj(SysProj proj) {
         if (proj.getId() == null || proj.getId() <= 0)
             return JsonData.fail("id is erro!");
-        projService.updatProjById(proj);
-        return JsonData.success(1);
+        System.out.println("id:"+proj.getId()+" "+proj.getDescr());
+        return JsonData.success( projService.updatProjById(proj));
     }
 
     //查看我的项目

@@ -19,6 +19,6 @@ public interface ProjDao {
 
     int delectProj(int id);
 
-    void updatProjById(SysProj sysProj);
+    int  updatProjById(SysProj sysProj);
 
 }

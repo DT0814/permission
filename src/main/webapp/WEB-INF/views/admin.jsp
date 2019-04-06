@@ -28,7 +28,7 @@
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
                 <li style="float:right">
-                <li>${username }</li>
+                <li><a href="#">${username }</a></li>
                 <li><a href="/logout.page">注销</a></li>
             </ul>
         </div>
@@ -64,8 +64,9 @@
             </li>
             <li class="">
                 <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text"> 信息管理</span>
+                    &nbsp;
+                    <i class="glyphicon glyphicon-home"></i>
+                    <span class="menu-text">&nbsp; 信息管理</span>
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
 
@@ -84,8 +85,9 @@
             </li>
             <li class="">
                 <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text"> 项目管理 </span>
+                    &nbsp;
+                    <i class="glyphicon glyphicon-file"></i>
+                    <span class="menu-text"> &nbsp;项目管理 </span>
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
                 <b class="arrow"></b>
@@ -93,14 +95,7 @@
                     <li class="">
                         <a class="popstyle" href="/ToProjTypeManage?userid=${user_id}" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            管理项目类型
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-                    <li class="">
-                        <a class="popstyle" href="/CreateNewProj" target="_blank">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            创建项目
+                            项目类型管理
                         </a>
                         <b class="arrow"></b>
                     </li>
@@ -121,9 +116,9 @@
                 </ul>
             </li>
             <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text"> 个人信息管理</span>
+                <a href="#" class="dropdown-toggle"> &nbsp;
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span class="menu-text"> &nbsp;个人信息管理</span>
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
                 <b class="arrow"></b>

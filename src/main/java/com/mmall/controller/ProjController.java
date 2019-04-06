@@ -200,16 +200,6 @@ public class ProjController {
         projService.insertProj(sysProj);
         return JsonData.success(1);
     }
-
-
-    @RequestMapping("/CreateNewProj")
-    @ResponseBody
-    public ModelAndView insertProj(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("NewProj");
-        SysUser user = (SysUser) request.getSession().getAttribute("user");
-        mav.addObject("user_id", user.getId());
-        return mav;
-    }
 }
 
 

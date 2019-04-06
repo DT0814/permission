@@ -82,17 +82,7 @@
                         </div>
                         <div class="form-group">
                             <label>项目类型</label>
-                            <select class="form-control" name="ptid">
-                                <template v-for="type in types">
-                                    <template v-if="type.id==currentTypeid">
-                                        <option selected v-bind:v-bind:value="type.id">{{type.name}}</option>
-                                    </template>
-                                    <template v-else>
-                                        <option v-bind:value="type.id">{{type.name}}</option>
-                                    </template>
-                                </template>
-
-                            </select>
+                            <input class="form-control" name="ptid" disabled/>
                         </div>
                         <div class="form-group">
                             <label>项目介绍</label>
@@ -116,27 +106,13 @@
             data: {
                 projs: {},
                 types: {},
-                currentTypeid: {},
             },
             mounted() {
                 this.$options.methods.topage(1);
             },
             methods: {
                 updateModal: function (proj) {
-                    vu.currentTypeid = proj.ptid;
-                    if (Object.keys(vu.types).length == 0) {
-                        var dse = $("#updateForm").find("select[name='ptid']");
-                        dse.empty();
-                        axios.get('${APP_PATH}/FindAllProjType')
-                            .then(function (response) {
-                                var result = response.data;
-                                if (result.ret) {
-                                    vu.types = result.data;
-                                } else {
-                                    alert(result.msg);
-                                }
-                            });
-                    }
+                    $("#updateForm").find("input[name='ptid']").val(proj.ptname);
                     $("#updateForm").find("input[name='id']").val(proj.id);
                     $("#updateForm").find("input[name='name']").val(proj.name);
                     $("#updateForm").find("textarea[name='descr']").val(proj.descr);

@@ -22,20 +22,20 @@
     <form id="updateForm" style="width: 200px;margin:0 auto">
         <div class="form-group">
             <label>用户名</label>
-            <input class="form-control" type="text" name="username"/>
+            <input class="form-control" type="text" name="username" v-bind:value="user.username"/>
         </div>
         <div class="form-group">
             <label>电话</label>
-            <input class="form-control" type="text" name="telephone"/>
+            <input class="form-control" type="text" name="telephone" v-bind:value="user.telephone"/>
         </div>
         <div class="form-group">
             <label>账号</label>
-            <input class="form-control" type="text" name="mail"/>
+            <input class="form-control" type="text" name="mail" v-bind:value="user.mail"/>
         </div>
         <div class="text-center">
             <span class="btn btn-primary" v-on:click="update">修改</span>
         </div>
-        <input type="hidden" name="id">
+        <input type="hidden" name="id" v-bind:value="user.id">
     </form>
 </div>
 
@@ -46,7 +46,7 @@
             user: {},
         },
         mounted() {
-            this.$options.methods.getUser(1);
+            this.$options.methods.getUser();
         },
         methods: {
             update: function () {
@@ -55,11 +55,11 @@
                     .then(function (response) {
                         var result = response.data;
                         if (result.ret) {
-                            alert("更新成功,请重新登录");
-                            window.open("/signin.jsp");
+                            alert("更新成功");
                         } else {
                             alert(result.msg);
                         }
+                        this.$options.methods.getUser();
                     });
             },
             getUser: function () {

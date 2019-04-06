@@ -22,20 +22,20 @@
     <form id="updateForm" style="width: 200px;margin:0 auto">
         <div class="form-group">
             <label>原密码</label>
-            <input class="form-control" type="password" name="password"/>
+            <input class="form-control" type="password" name="oldPassWord"/>
         </div>
         <div class="form-group">
             <label>新密码</label>
-            <input class="form-control" type="password" name="newPassword"/>
+            <input class="form-control" type="password" name="newPassword" id="newPassword"/>
         </div>
         <div class="form-group">
             <label>确认密码</label>
-            <input class="form-control" type="password" name="rePassword"/>
+            <input class="form-control" type="password" name="rePassword" id="rePassword"/>
         </div>
         <div class="text-center">
             <span class="btn btn-primary" v-on:click="update">修改</span>
         </div>
-        <input type="hidden" name="id">
+        <input type="hidden" name="uid" v-bind:value="user.id">
     </form>
 </div>
 
@@ -50,17 +50,21 @@
         },
         methods: {
             update: function () {
-                var formData = new FormData($("#updateForm")[0]);
-                axios.post('${APP_PATH}/updatePass.action', formData)
-                    .then(function (response) {
-                        var result = response.data;
-                        if (result.ret) {
-                            alert("更新成功,请重新登录");
-                            window.open("/signin.jsp");
-                        } else {
-                            alert(result.msg);
-                        }
-                    });
+                if ($("#rePassword").val() == $("#newPassword").val()) {
+                    var formData = new FormData($("#updateForm")[0]);
+                    axios.post('/updatePass.action', formData)
+                        .then(function (response) {
+                            var result = response.data;
+                            if (result.ret) {
+                                alert("更新成功,请重新登录");
+                                window.open("/signin.jsp");
+                            } else {
+                                alert(result.msg);
+                            }
+                        });
+                } else {
+                    alert("两次密码输入不一致");
+                }
             },
             getUser: function () {
                 axios.get('${APP_PATH}/getUser.action?uid=' + ${user_id})

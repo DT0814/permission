@@ -109,12 +109,12 @@ public class UserController {
 
     @RequestMapping("/updatePass.action")
     @ResponseBody
-    public JsonData updatePass(String oldPassWord, String newPassWord, Integer uid) {
+    public JsonData updatePass(String oldPassWord, String newPassword, Integer uid, HttpSession session) {
         SysUser user = sysUserService.selectByPrimaryKey(uid);
-        System.out.println("MD5Util.encrypt(oldPassWord):"+MD5Util.encrypt(oldPassWord));
+        System.out.println("MD5Util.encrypt(oldPassWord):" + MD5Util.encrypt(oldPassWord));
         if (!user.getPassword().equals(MD5Util.encrypt(oldPassWord)))
-            return JsonData.fail("pass is erro!");
-        String MD5Password = MD5Util.encrypt(newPassWord);
+            return JsonData.fail("旧密码错误!");
+        String MD5Password = MD5Util.encrypt(newPassword);
         user.setPassword(MD5Password);
         sysUserService.updateUser(user);
         return JsonData.success(1);
@@ -123,10 +123,10 @@ public class UserController {
     @RequestMapping("/updateUser.action")
     @ResponseBody
     public JsonData updateUser(SysUser sysUser) {
-        if(sysUser.getId()==null)
+        if (sysUser.getId() == null)
             return JsonData.fail("id is null");
-        System.out.println("sysUser.getId():"+sysUser.getId());
-        System.out.println("sysUser.getUsername():"+sysUser.getUsername());
+        System.out.println("sysUser.getId():" + sysUser.getId());
+        System.out.println("sysUser.getUsername():" + sysUser.getUsername());
         sysUserService.updateUser(sysUser);
         return JsonData.success(1);
     }

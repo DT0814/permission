@@ -73,14 +73,6 @@ public class ProjTypeController {
         return JsonData.success(1);
     }
 
-    //创建新的项目类型（跳转）
-    @RequestMapping("/CreateNewProjType")
-    @ResponseBody
-    public ModelAndView getProjById(@RequestParam("userid") int uid, HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("NewProjType");
-        return mav;
-    }
-
 
     //查看所有项目类型
     @RequestMapping("/ToProjTypeManage")

@@ -108,7 +108,7 @@ public class FileController {
         file1.setPid(pid);//待添加
         String filePath = fileType(FName);
         System.out.println("filePath:" + filePath);
-        System.out.println("filePath.charAt(1):"+filePath.charAt(1));
+        System.out.println("filePath.charAt(1):" + filePath.charAt(1));
         if (filePath.charAt(1) == 'f') {
             type = 1;
         }
@@ -182,7 +182,7 @@ public class FileController {
 
         String filePath = fileType(FName);
         System.out.println("filePath:" + filePath);
-        System.out.println("filePath.charAt(1):"+filePath.charAt(1));
+        System.out.println("filePath.charAt(1):" + filePath.charAt(1));
         if (filePath.charAt(1) == 'f') {
             type = 1;
         }
@@ -295,12 +295,4 @@ public class FileController {
         System.out.println(4);
         return JsonData.success(1, "OK");
     }
-
-    @RequestMapping("ShowPDF")
-    public ModelAndView showOneProj(@RequestParam("pdfpath") String filepath, HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("Yulan");
-        mav.addObject("filepath", filepath);
-        return mav;
-    }
-
 }

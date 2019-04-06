@@ -11,8 +11,8 @@ import java.util.List;
 public class FileService{
     @Resource
     FileDao fileDao;
- //   @Resource
-  //  PassageDao passageDao;
+    //   @Resource
+    //  PassageDao passageDao;
     public File getFileById(int id) {
         // TODO Auto-generated method stub
         return fileDao.getFileById(id);
@@ -20,7 +20,10 @@ public class FileService{
 
 
     public List<File> getFileByPid(int pid) {
-       ;        return  fileDao.getFileByPid(pid);
+        ;        return  fileDao.getFileByPid(pid);
+    }
+    public List<File> getFileByPidz(int pid) {
+        ;        return  fileDao.getFileByPidz(pid);
     }
     public File upload(File f) {
         fileDao.insert(f);

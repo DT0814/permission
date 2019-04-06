@@ -10,9 +10,14 @@
 			resultType="com.mmall.model.File">
 		select * from sys_file where id=#{id}
 	</select>
+	<select id="getFileByPidz" parameterType="int"
+			resultType="com.mmall.model.File">
+		SELECT *,sf.id id,s.id fid,uid FROM sys_proj_filename sf LEFT JOIN sys_file  s ON  s.pid=#{pid} AND sf.id=s.pfid
+	</select>
+
 	<select id="getFileByPid" parameterType="int"
 			resultType="com.mmall.model.File">
-		SELECT *,sf.id id,s.id fid FROM sys_proj_filename sf LEFT JOIN sys_file  s ON  s.pid=#{pid} AND sf.id=s.pfid
+		SELECT * FROM sys_file WHERE pid=#{pid}
 	</select>
 	<!--elect sys_file.*,sys_proj_filename.filename pfilename
 	from sys_file,sys_proj_filename where (sys_file.pfid=sys_proj_filename.id and sys_file.pid

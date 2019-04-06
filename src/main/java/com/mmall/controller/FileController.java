@@ -10,6 +10,7 @@ import com.mmall.util.OfficePDF;
 import com.mmall.util.Regex;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -87,9 +88,9 @@ public class FileController {
                     Model model) throws IOException {
         System.out.println("111");
         SysUser user = (SysUser) request.getSession().getAttribute("user");
-        if(user==null)
+        if (user == null)
             return JsonData.fail("nologin");
-        if(pfid<=0)
+        if (pfid <= 0)
             return JsonData.fail("pfid is null");
         //  uid = 1;//测试时用
         //  System.out.println("utype:" + utype);
@@ -114,15 +115,14 @@ public class FileController {
         } else if (Regex.isVideo(FName)) {//视频
             //if (type != 1) return JsonData.fail("I_PramFail");
             String filePath = FileUpload.uploadFile(file, "/video/", request);
-            type=0;
+            type = 0;
             file1.setLocation(filePath);
-        }  else if (Regex.isImage(FName)) {//图片
+        } else if (Regex.isImage(FName)) {//图片
             //if (type != 2) return JsonData.fail("I_PramFail");
-            type=0;
+            type = 0;
             String filePath = FileUpload.uploadFile(file, "/image/", request);
             file1.setLocation(filePath);
-        }
-        else {
+        } else {
             return JsonData.fail("I_PramFail");
         }
         file1.setFname(FName);
@@ -136,7 +136,53 @@ public class FileController {
         return JsonData.success(1);
     }
 
+    @RequestMapping("/updateFile.action")
+    @ResponseBody
+    @Transactional
+    JsonData updateFile(@RequestParam("file") MultipartFile file, HttpServletRequest request, @RequestParam("id") int id,
+                        Model model) throws IOException {
+        System.out.println("111");
+        SysUser user = (SysUser) request.getSession().getAttribute("user");
+        if (user == null)
+            return JsonData.fail("nologin");
 
+        String FName = file.getOriginalFilename();
+        File file1 = fileService.getFileById(id);
+        System.out.println("FName:" + FName);
+        if (FName != null) {
+            request.setAttribute("FName", FName);
+        }
+        Integer type;//
+        //  file1.setoldname(FName);
+        if (Regex.isWord(FName)) {//课件，还有pptx和ppt
+            //校验其余参数是否合法
+            type = 1;
+            String filePath = FileUpload.uploadFile(file, "/files/", request);
+            file1.setLocation(filePath);
+
+        } else if (Regex.isVideo(FName)) {//视频
+            //if (type != 1) return JsonData.fail("I_PramFail");
+            String filePath = FileUpload.uploadFile(file, "/video/", request);
+            type = 0;
+            file1.setLocation(filePath);
+        } else if (Regex.isImage(FName)) {//图片
+            //if (type != 2) return JsonData.fail("I_PramFail");
+            type = 0;
+            String filePath = FileUpload.uploadFile(file, "/image/", request);
+            file1.setLocation(filePath);
+        } else {
+            return JsonData.fail("I_PramFail");
+        }
+        file1.setFname(FName);
+        file1.setSize((long) (file.getSize() / 1024));
+        file1.settype(type);//非0时，表示是office，提供预览
+        file1.setUid(user.getId());
+        file1.setStartdate(new Timestamp(new Date().getTime()));
+        System.out.println(file1.toString());
+        fileService.upload(file1);
+        delectFile(request,id);
+        return JsonData.success(1);
+    }
     /*@RequestMapping("/user/getFile.action")
     @ResponseBody
     ResultData getFile(int id) {
@@ -164,9 +210,9 @@ public class FileController {
         String fileName = f.getLocation();
         System.out.println("fileName:" + fileName);
         String path = request.getSession().getServletContext().getRealPath(fileName);
-        System.out.println("path:"+path);
-        java.io.File file = new java.io.File(fileName);
-        String pdfFileName = fileName.substring(0, fileName.indexOf(".")) + ".pdf";
+        System.out.println("path:" + path);
+        java.io.File file = new java.io.File(path);
+        String pdfFileName = path.substring(0, path.lastIndexOf(".")) + ".pdf";
         System.out.println("pdfFileName:" + pdfFileName);
         java.io.File file1 = new java.io.File(pdfFileName);
         if (file.exists() && file.isFile())
@@ -176,8 +222,8 @@ public class FileController {
         if (file1.exists() && file1.isFile())
             System.out.println("file1.delete():" + file1.delete());
         else
-            System.out.println("file is not exist");
-        System.gc();
+            System.out.println("file1 is not exist");
+        // System.gc();
         int de = fileService.delectFile(id);
         return JsonData.success(10, String.valueOf(de));
     }
@@ -185,16 +231,16 @@ public class FileController {
     @RequestMapping("/user/downFile.action")//下载文件 这个几乎是没有用的
     @ResponseBody
     JsonData downFile(HttpServletResponse response, HttpServletRequest request, com.mmall.model.File F) {
-        if(F==null)
+        if (F == null)
             return JsonData.fail("您要下载的资源已被删除");
         com.mmall.model.File f1 = fileService.getFileById(F.getId());
-        if(f1==null)
+        if (f1 == null)
             return JsonData.fail("您要下载的资源已被删除");
         // String name1=(String)f1.getLocation();
         //   String fileName = f1.getLocation();
         // String fileName = request.getParameter(f1.getLocation());
         String path = request.getSession().getServletContext().getRealPath(f1.getLocation());
-        System.out.println("path:"+path);
+        System.out.println("path:" + path);
         //  System.out.println("fileName:"+fileName);
         System.out.println(2);
         try {

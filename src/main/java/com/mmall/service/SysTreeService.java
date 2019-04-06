@@ -80,7 +80,7 @@ public class SysTreeService {
         List<AclModuleLevelDto> aclModuleLevelList = aclModuleTree();
 
         Multimap<Integer, AclDto> moduleIdAclMap = ArrayListMultimap.create();
-        for(AclDto acl : aclDtoList) {
+        for (AclDto acl : aclDtoList) {
             if (acl.getStatus() == 1) {
                 moduleIdAclMap.put(acl.getAclModuleId(), acl);
             }
@@ -94,7 +94,7 @@ public class SysTreeService {
             return;
         }
         for (AclModuleLevelDto dto : aclModuleLevelList) {
-            List<AclDto> aclDtoList = (List<AclDto>)moduleIdAclMap.get(dto.getId());
+            List<AclDto> aclDtoList = (List<AclDto>) moduleIdAclMap.get(dto.getId());
             if (CollectionUtils.isNotEmpty(aclDtoList)) {
                 Collections.sort(aclDtoList, aclSeqComparator);
                 dto.setAclList(aclDtoList);
@@ -146,7 +146,7 @@ public class SysTreeService {
 
     public List<DeptLevelDto> deptTree() {
         List<SysDept> deptList = sysDeptMapper.getAllDept();
-
+        System.out.println("deptList.size():" + deptList.size());
         List<DeptLevelDto> dtoList = Lists.newArrayList();
         for (SysDept dept : deptList) {
             DeptLevelDto dto = DeptLevelDto.adapt(dept);

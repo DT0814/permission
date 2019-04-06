@@ -9,11 +9,11 @@ import com.mmall.service.ProjService;
 import com.mmall.service.SysDeptService;
 import com.mmall.service.SysUserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -74,7 +74,7 @@ public class ProjController {
     @ResponseBody
     public JsonData getAllFileNameAndFileByPid(@RequestParam("id") int id, HttpServletRequest request) {
         System.out.println("将要查看项目id" + id);
-        List<File> list = fileService.getFileByPid(id);
+        List<File> list = fileService.getFileByPidz(id);
         for (int i = 0; i < list.size(); i++) {
             String old = list.get(i).getLocation();
             if (null == old || old.indexOf(".") == -1) {
@@ -103,10 +103,15 @@ public class ProjController {
             }
         }
         List<SysProj> list = projService.getProjByLevel(level1);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUid() == userid)
-                list.get(i).setIsMy(1);
+        System.out.println("list.size():"+list.size());
+        if(list!=null||list.size()>0){
+            for(int i=0;i<list.size();i++)
+            {
+                if(list.get(i).getUid()==userid)
+                    list.get(i).setIsMy(1);
+            }
         }
+
         ModelAndView mav = new ModelAndView("ShowAllProj");
         mav.addObject("ProjList", list);
         return mav;
@@ -118,10 +123,12 @@ public class ProjController {
      * */
     @RequestMapping("/delectProj.action")
     @ResponseBody
+    @Transactional
     public JsonData delectProj(@RequestParam("id") Integer id) {
         if (id == null || id <= 0)
             return JsonData.fail("pid is null!");
         List<File> fileList = fileService.getFileByPid(id);
+        System.out.println("fileList.size():"+fileList.size());
         for (int i = 0; i < fileList.size(); i++) {
             java.io.File file = new java.io.File(fileList.get(i).getLocation());
             String pdfFileName = fileList.get(i).getLocation().substring(0, fileList.get(i).getLocation().indexOf(".")) + ".pdf";

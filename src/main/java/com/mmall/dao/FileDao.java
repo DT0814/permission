@@ -13,6 +13,7 @@ public interface FileDao {
     File getFileById(int id);
     File getFileByFName(String fName);
     List<File> getFileByPid(int pid);
+    List<File> getFileByPidz(int pid);
     File getFileByUid(int uid);
     void insert(File bf);
     int delectFile(Integer id);

@@ -76,7 +76,7 @@
                                 <button class="btn btn-primary " v-on:click="updateFileModal(f)">修改</button>
                                 <template v-if="f.type!=0">
                                     <a class="btn btn-info " target="_blank"
-                                       v-bind:href="'/ShowPDF?pdfpath='+ f.location">预览</a>
+                                       v-bind:href="'pdfjs/web/viewer.html?file='+ f.location">预览</a>
                                 </template>
                                 <button class="btn btn-danger " v-on:click="deleteFile(f)">删除</button>
                             </template>

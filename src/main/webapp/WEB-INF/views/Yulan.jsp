@@ -9,6 +9,7 @@
 <body>
 <script>
     $(function () {
+        console.log(1)
         var url = '${filepath}';
         window.open("pdfjs/web/viewer.html?file=" + url);
     })

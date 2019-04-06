@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -45,7 +46,7 @@ public class ProjController {
     //查看我的项目
     @RequestMapping("/showMyProj")
     @ResponseBody
-    public ModelAndView getProjById( HttpServletRequest request) {
+    public ModelAndView getProjById(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
         ModelAndView mav = new ModelAndView("MyProj");
         System.out.println("查看id为" + user.getId() + "的项目");
@@ -60,7 +61,7 @@ public class ProjController {
     //查看/上传文件  我的某个项目
     @RequestMapping("/toProj")
     @ResponseBody
-    public ModelAndView toProj(@RequestParam("id") int id, HttpServletRequest request) {
+    public ModelAndView toProj(@RequestParam("id") int id) {
         ModelAndView mav = new ModelAndView("ProJ");
         System.out.println("将要查看项目id" + id);
         SysProj proj = projService.getOneProj(id);
@@ -73,8 +74,7 @@ public class ProjController {
     //查看/上传文件  我的某个项目
     @RequestMapping("/getAllFileNameAndFileByPid.action")
     @ResponseBody
-    public JsonData getAllFileNameAndFileByPid(@RequestParam("id") int id, HttpServletRequest request) {
-        System.out.println("将要查看项目id" + id);
+    public JsonData getAllFileNameAndFileByPid(@RequestParam("id") int id) {
         List<File> list = fileService.getFileByPidz(id);
         for (int i = 0; i < list.size(); i++) {
             String old = list.get(i).getLocation();
@@ -92,11 +92,20 @@ public class ProjController {
     /*
      * 查看所有项目用
      * */
-    @RequestMapping("/showAllProj")
+    @RequestMapping("/toProjManage")
+    public ModelAndView toProjManage() {
+        ModelAndView mav = new ModelAndView("ShowAllProj");
+        return mav;
+    }
+
+    /*
+     * 查看所有项目用
+     * */
+    @RequestMapping("/getAllProj.action")
     @ResponseBody
-    public ModelAndView getProjByLevel( HttpServletRequest request) {
+    public JsonData getProjByLevel(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
-       user = sysUserService.selectByPrimaryKey(user.getId());
+        user = sysUserService.selectByPrimaryKey(user.getId());
         String level = sysDeptService.getLevel(user.getDeptId());
         int level1 = 0;
         for (int i = 0; i < level.length(); i++) {
@@ -105,20 +114,14 @@ public class ProjController {
             }
         }
         List<SysProj> list = projService.getProjByLevel(level1);
-        System.out.println("list.size():"+list.size());
-        if(list!=null||list.size()>0){
-            for(int i=0;i<list.size();i++)
-            {
-                if(list.get(i).getUid()==user.getId())
+        if (list != null || list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getUid() == user.getId())
                     list.get(i).setIsMy(1);
             }
         }
-
-        ModelAndView mav = new ModelAndView("ShowAllProj");
-        mav.addObject("ProjList", list);
-        return mav;
+        return JsonData.success(list);
     }
-
 
     /*
      * 删除项目用
@@ -130,7 +133,7 @@ public class ProjController {
         if (id == null || id <= 0)
             return JsonData.fail("pid is null!");
         List<File> fileList = fileService.getFileByPid(id);
-        System.out.println("fileList.size():"+fileList.size());
+        System.out.println("fileList.size():" + fileList.size());
         for (int i = 0; i < fileList.size(); i++) {
             java.io.File file = new java.io.File(fileList.get(i).getLocation());
             String pdfFileName = fileList.get(i).getLocation().substring(0, fileList.get(i).getLocation().indexOf(".")) + ".pdf";
@@ -186,9 +189,9 @@ public class ProjController {
 
     @RequestMapping("/CreateNewProj")
     @ResponseBody
-    public ModelAndView insertProj( HttpServletRequest request) {
+    public ModelAndView insertProj(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("NewProj");
-        SysUser user= (SysUser) request.getSession().getAttribute("user");
+        SysUser user = (SysUser) request.getSession().getAttribute("user");
         mav.addObject("user_id", user.getId());
         return mav;
     }

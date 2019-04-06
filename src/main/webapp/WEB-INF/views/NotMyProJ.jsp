@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Fly Template v3.0 所有页面目录</title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="./css/bootstrap-3.3.7-dist/css/bootstrap.css">
     <link href="${APP_PATH }/css/custom-styles.css" rel="stylesheet"/>

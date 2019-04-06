@@ -100,21 +100,21 @@
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a class="popstyle" href="/CreateNewProj?userid=${user_id}" target="_blank">
+                        <a class="popstyle" href="/CreateNewProj" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
                             创建项目
                         </a>
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a class="popstyle" href="/showMyProj?userid=${user_id}" target="_blank">
+                        <a class="popstyle" href="/showMyProj" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
                             我的项目
                         </a>
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a class="popstyle" href="/showAllProj?userid=${user_id}" target="_blank">
+                        <a class="popstyle" href="/toProjManage" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
                             所有项目
                         </a>

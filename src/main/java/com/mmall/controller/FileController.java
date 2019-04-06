@@ -103,33 +103,18 @@ public class FileController {
         if (FName != null) {
             request.setAttribute("FName", FName);
         }
-        Integer type;//
+        Integer type = 0;//
         //  file1.setoldname(FName);
         file1.setPid(pid);//待添加
-        if (Regex.isWord(FName)) {//课件，还有pptx和ppt
-            //校验其余参数是否合法
+        String filePath = fileType(FName);
+        System.out.println("filePath:" + filePath);
+        System.out.println("filePath.charAt(1):"+filePath.charAt(1));
+        if (filePath.charAt(1) == 'f') {
             type = 1;
-            String filePath = FileUpload.uploadFile(file, "/files/", request);
-            file1.setLocation(filePath);
-
-        } else if (Regex.isVideo(FName)) {//视频
-            //if (type != 1) return JsonData.fail("I_PramFail");
-            String filePath = FileUpload.uploadFile(file, "/video/", request);
-            type = 0;
-            file1.setLocation(filePath);
-        } else if (Regex.isImage(FName)) {//图片
-            //if (type != 2) return JsonData.fail("I_PramFail");
-            type = 0;
-            String filePath = FileUpload.uploadFile(file, "/image/", request);
-            file1.setLocation(filePath);
-        }else if (Regex.isPDF(FName)) {//图片
-            //if (type != 2) return JsonData.fail("I_PramFail");
-            type = 1;
-            String filePath = FileUpload.uploadFile(file, "/files/", request);
-            file1.setLocation(filePath);
-        } else {
-            return JsonData.fail("I_PramFail");
         }
+        filePath = FileUpload.uploadFile(file, filePath, request);
+        System.out.println("filePath:" + filePath);
+        file1.setLocation(filePath);
         file1.setFname(FName);
         file1.setSize((long) (file.getSize() / 1024));
         file1.settype(type);//非0时，表示是office，提供预览
@@ -139,6 +124,22 @@ public class FileController {
         System.out.println(file1.toString());
         fileService.upload(file1);
         return JsonData.success(1);
+    }
+
+    public String fileType(String FName) {
+        String filePath;
+        if (Regex.isWord(FName) || Regex.isPDF(FName)) {//课件，还有pptx和ppt
+            //校验其余参数是否合法
+            return "/files/";
+        } else if (Regex.isVideo(FName)) {//视频
+            //if (type != 1) return JsonData.fail("I_PramFail");
+            return "/video/";
+        } else if (Regex.isImage(FName)) {//图片
+            //if (type != 2) return JsonData.fail("I_PramFail");
+            return "/image/";
+        } else {
+            return "/others/";
+        }
     }
 
     @RequestMapping("/updateFile.action")
@@ -157,9 +158,9 @@ public class FileController {
         if (FName != null) {
             request.setAttribute("FName", FName);
         }
-        Integer type;//
+        Integer type = 0;//
         //  file1.setoldname(FName);
-        if (Regex.isWord(FName)) {//课件，还有pptx和ppt
+   /*     if (Regex.isWord(FName)) {//课件，还有pptx和ppt
             //校验其余参数是否合法
             type = 1;
             String filePath = FileUpload.uploadFile(file, "/files/", request);
@@ -177,7 +178,17 @@ public class FileController {
             file1.setLocation(filePath);
         } else {
             return JsonData.fail("I_PramFail");
+        }*/
+
+        String filePath = fileType(FName);
+        System.out.println("filePath:" + filePath);
+        System.out.println("filePath.charAt(1):"+filePath.charAt(1));
+        if (filePath.charAt(1) == 'f') {
+            type = 1;
         }
+        filePath = FileUpload.uploadFile(file, filePath, request);
+        System.out.println("filePath:" + filePath);
+        file1.setLocation(filePath);
         file1.setFname(FName);
         file1.setSize((long) (file.getSize() / 1024));
         file1.settype(type);//非0时，表示是office，提供预览
@@ -185,7 +196,7 @@ public class FileController {
         file1.setStartdate(new Timestamp(new Date().getTime()));
         System.out.println(file1.toString());
         fileService.upload(file1);
-        delectFile(request,id);
+        delectFile(request, id);
         return JsonData.success(1);
     }
     /*@RequestMapping("/user/getFile.action")

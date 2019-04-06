@@ -61,8 +61,7 @@
                                 <div class="field">
                                     <span type="text" style="height: 32px;border:1px solid #f1f1f1">
                                          已上传文件名:{{f.fname}}
-                                        <button class="btn btn-info "
-                                                v-on:click="downLoad(f)">下载</button>
+                                        <a class="btn btn-info " v-bind:href="'/user/downFile.action?id='+f.fid">下载</a>
                                     </span>
                                 </div>
                             </div>
@@ -76,7 +75,8 @@
                             <template v-else>
                                 <button class="btn btn-primary " v-on:click="updateFileModal(f)">修改</button>
                                 <template v-if="f.type!=0">
-                                    <button class="btn btn-info " v-on:v-on:click="show(f)">预览</button>
+                                    <a class="btn btn-info " target="_blank"
+                                       v-bind:href="'/ShowPDF?pdfpath='+ f.location">预览</a>
                                 </template>
                                 <button class="btn btn-danger " v-on:click="deleteFile(f)">删除</button>
                             </template>
@@ -165,8 +165,7 @@
                                        style="height: 40px;border:1px solid #f1f1f1;width: 70%"/>
                             </div>
                         </div>
-                        <input type="hidden" name="pid" value="${Pid}"/>
-                        <input type="hidden" name="pfid"/>
+                        <input type="hidden" name="id"/>
                         <div class="text-right">
                             <span class="btn btn-primary" v-on:click="update">提交</span>
                             <button class="btn btn-danger" data-dismiss="modal">取消</button>
@@ -231,7 +230,7 @@
             update: function () {
                 $("#jdModal").modal({backdrop: 'static', keyboard: false});
                 var div = $("#jdModal").find("div[name='value']");
-                var formData = new FormData($("#updateFileNameForm")[0]);
+                var formData = new FormData($("#updateFileForm")[0]);
                 let config = {
                     onUploadProgress: function (progressEvent) {
                         var complete = (progressEvent.loaded / progressEvent.total * 100 | 0)
@@ -241,12 +240,12 @@
                     },
                     headers: {'Content-Type': 'multipart/form-data'}
                 };
-                axios.post('${APP_PATH}/upFile.action', formData, config)
+                axios.post('${APP_PATH}/updateFile.action', formData, config)
                     .then(function (response) {
                         $("#jdModal").modal("hide");
                         var result = response.data;
                         if (result.ret) {
-                            alert("添加成功");
+                            alert("修改成功");
                         } else {
                             alert(result.msg);
                         }
@@ -281,17 +280,19 @@
                 $("#uploadModal").modal();
             },
             updateFileModal: function (f) {
-                $("#updateFileForm").find("input[name='pfid']").val(f.id);
+                $("#updateFileForm").find("input[name='id']").val(f.fid);
                 $("#updateFileModal").modal();
             },
             deleteFile: function (f) {
                 if (confirm("您确定要删除文件" + f.fname + " ?")) {
-                    axios.get('${APP_PATH}/product/delete.action?pid=' + pro.pid).then(function (response) {
+                    axios.get('${APP_PATH}/delectFile.action?id=' + f.fid).then(function (response) {
                         var data = response.data;
-                        if (data.code == 200) {
+                        if (data.ret) {
                             alert("删除成功");
-                            vu.$options.methods.topage(vu.pageInfo.pageNum);
+                        } else {
+                            alert(data.msg);
                         }
+                        vu.$options.methods.topage(1);
                     })
                 }
             }

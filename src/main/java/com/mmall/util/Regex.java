@@ -39,6 +39,18 @@ public class Regex {
         }
         return flag;
     }
+    public static boolean isPDF(String pram) {
+        boolean flag = false;
+        try {
+            String regStr = ".+(.PDF)$";
+            Pattern regex = Pattern.compile(regStr);
+            Matcher matcher = regex.matcher(pram);
+            flag = matcher.matches();
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
     public static boolean isWord(String pram) {
         boolean flag = false;
         try {

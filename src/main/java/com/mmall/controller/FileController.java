@@ -122,6 +122,11 @@ public class FileController {
             type = 0;
             String filePath = FileUpload.uploadFile(file, "/image/", request);
             file1.setLocation(filePath);
+        }else if (Regex.isPDF(FName)) {//图片
+            //if (type != 2) return JsonData.fail("I_PramFail");
+            type = 1;
+            String filePath = FileUpload.uploadFile(file, "/files/", request);
+            file1.setLocation(filePath);
         } else {
             return JsonData.fail("I_PramFail");
         }

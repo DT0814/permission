@@ -98,12 +98,25 @@ public class UserController {
     }
 
     @RequestMapping("/getUser.action")
+    @ResponseBody
     public JsonData getUser(Integer uid) {
         if (null == uid || uid < 0) {
             return JsonData.fail("uid is null!");
         }
         SysUser user = sysUserService.selectByPrimaryKey(uid);
         return JsonData.success(user);
+    }
+
+    @RequestMapping("/updatePass.action")
+    @ResponseBody
+    public JsonData updatePass(String oldPassWord, String newPassWord) {
+        return null;
+    }
+
+    @RequestMapping("/updateUser.action")
+    @ResponseBody
+    public JsonData updateUser(String Username, String telephone, String mail) {
+        return null;
     }
 
     @RequestMapping(value = "/updateuser.action", method = RequestMethod.POST)

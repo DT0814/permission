@@ -45,7 +45,7 @@ public class SysDeptController {
     public JsonData tree(HttpServletRequest request) {
         List<DeptLevelDto> dtoList = sysTreeService.deptTree();
         SysUser user = (SysUser) request.getSession().getAttribute("user");
-        if (user.getDeptId() == 1) {
+        if (user.getId() == 1) {
             return JsonData.success(dtoList);
         } else {
             List<DeptLevelDto> deptTree = DeptUtils.getDeptTree(user.getDeptId(), dtoList);

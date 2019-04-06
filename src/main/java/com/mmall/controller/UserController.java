@@ -47,10 +47,8 @@ public class UserController {
 
     @RequestMapping("/login.page")
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
         SysUser sysUser = sysUserService.findByKeyword(username);
         String errorMsg = "";
         String ret = request.getParameter("ret");
@@ -72,9 +70,7 @@ public class UserController {
             if (StringUtils.isNotBlank(ret)) {
                 response.sendRedirect(ret);
             } else {
-                request.setAttribute("username", sysUser.getUsername());
-                System.out.println("当前登录的用户名：" + sysUser.getUsername());
-                response.sendRedirect("/admin/index.page" + "?username=" + sysUser.getUsername() + "&user_id=" + sysUser.getId()); //TODO
+                response.sendRedirect("/admin/index.page"); //TODO
             }
         }
 

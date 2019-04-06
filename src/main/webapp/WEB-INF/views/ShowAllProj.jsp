@@ -46,7 +46,7 @@
                 <td>
                     <div class="btn-group" role="group" aria-label="...">
                         <button class="btn btn-primary " v-on:click="updateModal(proj)">修改</button>
-                        <a class="btn btn-info " v-bind:href="'/toProj?id='+proj.id" target="_blank">管理</a>
+                        <a class="btn btn-info " v-bind:href="'/toProj?id='+proj.id" >管理</a>
                         <button class="btn btn-danger" v-on:click="deleteC(proj)">删除</button>
                     </div>
                 </td>

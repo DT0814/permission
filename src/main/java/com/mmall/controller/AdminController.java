@@ -1,7 +1,9 @@
 package com.mmall.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.mmall.model.SysUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,12 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController {
 
     @RequestMapping("index.page")
-    public ModelAndView index(@RequestParam(value="username")String usernamenow,@RequestParam(value="user_id")String userid) {
-        ModelAndView mav=new ModelAndView("admin");
-        mav.addObject("username", usernamenow);
-        mav.addObject("user_id", userid);
-        System.out.println("ididid"+userid);
-        System.out.println("获取用户名"+usernamenow);
+    public ModelAndView index(HttpSession session) {
+        ModelAndView mav = new ModelAndView("admin");
+        SysUser sysUser = (SysUser) session.getAttribute("user");
+        mav.addObject("username", sysUser.getUsername());
+        mav.addObject("user_id", sysUser.getId());
         return mav;
     }
 }

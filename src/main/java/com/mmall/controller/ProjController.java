@@ -69,6 +69,17 @@ public class ProjController {
         mav.addObject("ProjDesc", proj.getDescr());
         mav.addObject("Pid", id);
         return mav;
+    }//查看/上传文件  我的某个项目
+
+    @RequestMapping("/toOtherProj")
+    @ResponseBody
+    public ModelAndView toOtherProj(@RequestParam("id") int id) {
+        ModelAndView mav = new ModelAndView("NotMyProj");
+        SysProj proj = projService.getOneProj(id);
+        mav.addObject("ProjName", proj.getName());
+        mav.addObject("ProjDesc", proj.getDescr());
+        mav.addObject("Pid", id);
+        return mav;
     }
 
     //查看/上传文件  我的某个项目

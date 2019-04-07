@@ -1,4 +1,5 @@
-﻿<%@ page import="com.mmall.common.RequestHolder" %>
+﻿<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.mmall.common.RequestHolder" %>
 <%@ page import="com.mmall.model.SysUser" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -92,13 +93,15 @@
                 </a>
                 <b class="arrow"></b>
                 <ul class="submenu">
-                    <li class="">
-                        <a class="popstyle" href="/ToProjTypeManage?userid=${user_id}" target="_blank">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            项目类型管理
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
+                    <c:if test="${user_id == 1}">
+                        <li class="">
+                            <a class="popstyle" href="/ToProjTypeManage?userid=${user_id}" target="_blank">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                项目类型管理
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </c:if>
                     <li class="">
                         <a class="popstyle" href="/toMyProj" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>

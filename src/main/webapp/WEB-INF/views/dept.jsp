@@ -159,7 +159,7 @@
 <script id="deptListTemplate" type="x-tmpl-mustache">
 <ol class="dd-list">
     {{#deptList}}
-        <li class="dd-item dd2-item dept-name" id="dept_{{id}}" href="javascript:void(0)" data-id="{{id}}">
+        <li class="dd-item dd2-item dept-name" id="dept_{{id}}" href="javascript:void(0)" data-id="{{id}}" onclick="clicks(this)">
             <div class="dd2-content" style="cursor:pointer;">
             {{name}}
             <span style="float:right;">
@@ -175,6 +175,15 @@
         </li>
     {{/deptList}}
 </ol>
+
+
+
+
+
+
+
+
+
 
 
 </script>
@@ -198,6 +207,15 @@
     </td>
 </tr>
 {{/userList}}
+
+
+
+
+
+
+
+
+
 
 
 </script>
@@ -570,6 +588,14 @@
             })
         }
     })
+
+    function clicks(el) {
+        if ($(el).find("ol").attr("style") == null) {
+            $(el).find("ol").attr("style", "display:none;");
+        } else {
+            $(el).find("ol").removeAttr("style");
+        }
+    }
 </script>
 </body>
 </html>

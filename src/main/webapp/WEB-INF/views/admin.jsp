@@ -66,27 +66,6 @@
             <li class="">
                 <a href="#" class="dropdown-toggle">
                     &nbsp;
-                    <i class="glyphicon glyphicon-home"></i>
-                    <span class="menu-text">&nbsp; 信息管理</span>
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a class="popstyle" href="/sys/dept/dept.page" target="_blank">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            用户/部门管理
-                        </a>
-                        <b class="arrow"></b>
-                    </li>
-
-                </ul>
-            </li>
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    &nbsp;
                     <i class="glyphicon glyphicon-file"></i>
                     <span class="menu-text"> &nbsp;项目管理 </span>
                     <b class="arrow fa fa-angle-down"></b>
@@ -118,6 +97,28 @@
                     </li>
                 </ul>
             </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    &nbsp;
+                    <i class="glyphicon glyphicon-home"></i>
+                    <span class="menu-text">&nbsp; 信息管理</span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a class="popstyle" href="/sys/dept/dept.page" target="_blank">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            用户/部门管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
+
             <li class="">
                 <a href="#" class="dropdown-toggle"> &nbsp;
                     <i class="glyphicon glyphicon-user"></i>
@@ -158,7 +159,7 @@
     </div>
 
     <div class="main-content">
-        <iframe id="innerFrame" src="/sys/dept/dept.page" width="99%" style="min-height: 768px;"></iframe>
+        <iframe id="innerFrame" src="/toMyProj" width="99%" style="min-height: 768px;height: 100%"></iframe>
     </div>
     <!-- /.main-content -->
 

@@ -12,8 +12,8 @@
     <script src="./css/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
 <body style=";height: 100%;">
-<div id="bd" class="container" v-cloak style="width: 100%;height: 100%;background: rgb(237, 237, 237)">
-    <div class="header" style="background: rgb(237, 237, 237);margin: 10px">
+<div id="bd" class="container" v-cloak style="width: 100%;height: 100%;">
+    <div class="header" style=";margin: 10px">
         <h1 class="page-header" style="font-size: 36px">
             个人信息管理
             <small>密码修改</small>
@@ -57,7 +57,7 @@
                             var result = response.data;
                             if (result.ret) {
                                 alert("更新成功,请重新登录");
-                                window.open("/signin.jsp");
+                                window.open("/signin.jsp", "_parent");
                             } else {
                                 alert(result.msg);
                             }

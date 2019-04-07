@@ -205,6 +205,7 @@
             },
             methods: {
                 updateModal: function (ty) {
+                    vu.$options.methods.emptyFrom($("#updateForm").find("input"));
                     $("#updateForm").find("input[name='id']").val(ty.id);
                     $("#updateForm").find("input[name='name']").val(ty.name);
                     $("#updateModal").modal();
@@ -225,6 +226,7 @@
                         });
                 },
                 createTpye: function () {
+                    vu.$options.methods.emptyFrom($("#addModal").find("input"));
                     $("#addModal").modal();
                 },
                 add: function () {
@@ -266,6 +268,7 @@
                     $("#showFileName").modal();
                 },
                 createFileName: function () {
+                    vu.$options.methods.emptyFrom($("#addFileNameForm").find("input"));
                     $("#addFileNameForm").find("input[name='ptid']").val(vu.ptid);
                     $("#addFileNameModal").modal();
                 },
@@ -285,6 +288,7 @@
                         });
                 },
                 updateFileNameModal: function (fn) {
+                    vu.$options.methods.emptyFrom($("#updateFileNameForm").find("input"));
                     $("#updateFileNameForm").find("input[name='id']").val(fn.id);
                     $("#updateFileNameForm").find("input[name='filename']").val(fn.filename);
                     $("#updateFileNameModal").modal();
@@ -341,6 +345,11 @@
                     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
                     // 拼接
                     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+                },
+                emptyFrom: function (ele) {
+                    $.each(ele, function () {
+                        $(this).val("");
+                    })
                 },
             }
         })

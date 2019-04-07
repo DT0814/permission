@@ -128,7 +128,7 @@
                                        style="height: 40px;border:1px solid #f1f1f1;width: 70%"/>
                             </div>
                         </div>
-                        <input type="hidden" name="pid" value="${Pid}"/>
+                        <input type="hidden" name="pid"/>
                         <input type="hidden" name="pfid"/>
                         <div class="text-right">
                             <span class="btn btn-primary" v-on:click="upload">提交</span>
@@ -185,9 +185,11 @@
         data: {
             files: {},
             pfid: {},
+            pid: {},
         },
         mounted() {
             this.$options.methods.topage(1);
+            this.pid = ${Pid};
         },
         methods: {
             topage: function (num) {
@@ -272,14 +274,16 @@
                 }
             },
             uploadChange: function (event, id) {
-                console.log($(event.currentTarget).val());
                 $("#uploadLable" + id).text($(event.currentTarget).val());
             },
             uploadModal: function (f) {
+                vu.$options.methods.emptyFrom($("#uplaodFrom").find("input"));
                 $("#uplaodFrom").find("input[name='pfid']").val(f.id);
+                $("#uplaodFrom").find("input[name='pid']").val(vu.pid);
                 $("#uploadModal").modal();
             },
             updateFileModal: function (f) {
+                vu.$options.methods.emptyFrom($("#updateFileForm").find("input"));
                 $("#updateFileForm").find("input[name='id']").val(f.fid);
                 $("#updateFileModal").modal();
             },
@@ -295,7 +299,12 @@
                         vu.$options.methods.topage(1);
                     })
                 }
-            }
+            },
+            emptyFrom: function (ele) {
+                $.each(ele, function () {
+                    $(this).val("");
+                })
+            },
         },
     });
 </script>

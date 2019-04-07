@@ -149,6 +149,7 @@
             },
             methods: {
                 updateModal: function (proj) {
+                    vu.$options.methods.emptyFrom($("#updateForm").find("input"));
                     $("#updateForm").find("input[name='ptid']").val(proj.ptname);
                     $("#updateForm").find("input[name='id']").val(proj.id);
                     $("#updateForm").find("input[name='name']").val(proj.name);
@@ -171,6 +172,7 @@
                         });
                 },
                 createProj: function () {
+                    vu.$options.methods.emptyFrom($("#addModal").find("input"));
                     if (Object.keys(vu.types).length == 0) {
                         var dse = $("#addForm").find("select[name='ptid']");
                         dse.empty();
@@ -184,7 +186,6 @@
                                 }
                             });
                     }
-
                     $("#addModal").modal();
                 },
                 add: function () {
@@ -234,6 +235,11 @@
                     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
                     // 拼接
                     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+                },
+                emptyFrom: function (ele) {
+                    $.each(ele, function () {
+                        $(this).val("");
+                    })
                 },
             }
         })

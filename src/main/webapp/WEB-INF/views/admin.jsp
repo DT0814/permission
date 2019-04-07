@@ -30,7 +30,7 @@
             <ul class="nav ace-nav">
                 <li style="float:right">
                 <li><a href="#">${username }</a></li>
-                <li><a href="/logout.page">注销</a></li>
+                <li><a href="#" onclick="loginOut()">注销</a></li>
             </ul>
         </div>
 
@@ -214,6 +214,11 @@
 <script src="/assets/js/ace.min.js"></script>
 
 <script>
+    function loginOut() {
+        if (confirm("您确定要注销登录么")) {
+            window.open("/logout.page");
+        }
+    }
 
     $(document).ready(function () {
         $(".popstyle").removeAttr("target");

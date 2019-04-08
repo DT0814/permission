@@ -173,6 +173,7 @@
                 },
                 createProj: function () {
                     vu.$options.methods.emptyFrom($("#addModal").find("input"));
+                    $("#addModal").find("textarea").val("");
                     if (Object.keys(vu.types).length == 0) {
                         var dse = $("#addForm").find("select[name='ptid']");
                         dse.empty();

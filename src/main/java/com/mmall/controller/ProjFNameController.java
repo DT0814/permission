@@ -4,6 +4,7 @@ import com.mmall.common.JsonData;
 import com.mmall.model.SysProj;
 import com.mmall.model.SysProjFName;
 import com.mmall.model.SysProjType;
+import com.mmall.model.SysUser;
 import com.mmall.service.ProjFNameService;
 import com.mmall.service.ProjTypeService;
 import org.springframework.stereotype.Controller;
@@ -75,6 +76,8 @@ public class ProjFNameController {
     public JsonData getProjFNameByPtid(@RequestParam("ptid") Integer ptid) {
         if (ptid == null || ptid <= 0)
             return JsonData.fail("ptid is erro!");
+
+
         return JsonData.success(projFNameService.getProjFNameByPtid(ptid));
     }
 

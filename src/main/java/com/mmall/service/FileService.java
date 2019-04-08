@@ -5,7 +5,9 @@ import com.mmall.dao.FileDao;
 import com.mmall.model.File;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("fileService")
 public class FileService{
@@ -22,8 +24,11 @@ public class FileService{
     public List<File> getFileByPid(int pid) {
         ;        return  fileDao.getFileByPid(pid);
     }
-    public List<File> getFileByPidz(int pid) {
-        ;        return  fileDao.getFileByPidz(pid);
+    public List<File> getFileByPidz(int pid,int uid) {
+        Map map=new HashMap();
+        map.put("pid",pid);
+        map.put("uid",uid);
+       return  fileDao.getFileByPidz(map);
     }
     public File upload(File f) {
         fileDao.insert(f);

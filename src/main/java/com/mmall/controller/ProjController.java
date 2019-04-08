@@ -87,8 +87,12 @@ public class ProjController {
     //查看/上传文件  我的某个项目
     @RequestMapping("/getAllFileNameAndFileByPid.action")
     @ResponseBody
-    public JsonData getAllFileNameAndFileByPid(@RequestParam("id") int id) {
-        List<File> list = fileService.getFileByPidz(id);
+    public JsonData getAllFileNameAndFileByPid(@RequestParam("id") int id,HttpServletRequest request) {
+
+        SysUser user = (SysUser) request.getSession().getAttribute("user");
+        if(user==null)
+            return JsonData.fail("noligin");
+        List<File> list = fileService.getFileByPidz(id,user.getId());
         for (int i = 0; i < list.size(); i++) {
             String old = list.get(i).getLocation();
             if (null == old || old.indexOf(".") == -1) {

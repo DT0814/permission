@@ -217,7 +217,7 @@
 <script>
     function loginOut() {
         if (confirm("您确定要注销登录么")) {
-            window.open("/logout.page");
+            window.open("/logout.page","_self");
         }
     }
 

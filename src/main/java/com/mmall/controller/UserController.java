@@ -117,6 +117,7 @@ public class UserController {
         String MD5Password = MD5Util.encrypt(newPassword);
         user.setPassword(MD5Password);
         sysUserService.updateUser(user);
+        session.invalidate();
         return JsonData.success(1);
     }
 

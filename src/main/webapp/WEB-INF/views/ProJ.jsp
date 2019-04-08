@@ -21,14 +21,14 @@
     <script src="${APP_PATH }/css/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
 <body>
-<div id="bd" class="container" v-cloak style="width: 100%;height: 100%;background: rgb(237, 237, 237)">
-    <div class="header" style="background: rgb(237, 237, 237);margin: 10px">
+<div id="bd" class="container" v-cloak style="width: 100%;height: 100%;">
+    <div class="header" style=";margin: 10px;background-color: white">
         <h1 class="page-header" style="font-size: 36px">
             我的项目:
             <small>${ProjName}</small>
         </h1>
     </div>
-    <div class="row" style="background:rgb(237, 237, 237)">
+    <div class="row">
         <div class="col-md-12" style="margin: 10px">
             <div class="panel-heading">
                 用户信息表

@@ -65,6 +65,11 @@ public class SysUserService {
         after.setOperator(RequestHolder.getCurrentUser().getUsername());
         after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
+        if (after.getStatus() == 2) {
+            after.setTelephone("-");
+            after.setMail("-");
+            System.out.println("1111");
+        }
         sysUserMapper.updateByPrimaryKeySelective(after);
         sysLogService.saveUserLog(before, after);
     }

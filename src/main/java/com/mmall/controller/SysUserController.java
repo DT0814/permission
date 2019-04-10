@@ -44,10 +44,9 @@ public class SysUserController {
     @RequestMapping("/update.json")
     @ResponseBody
     public JsonData updateUser(UserParam param) {
-        if(param.getStatus()==2)
-            sysUserService.deleteUserByID(param.getId());
-        else
-            sysUserService.update(param);
+
+
+        sysUserService.update(param);
         return JsonData.success();
     }
 
@@ -66,7 +65,6 @@ public class SysUserController {
         map.put("roles", sysRoleService.getRoleListByUserId(userId));
         return JsonData.success(map);
     }
-
 
 
 }

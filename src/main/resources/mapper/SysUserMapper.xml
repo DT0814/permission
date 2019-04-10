@@ -200,13 +200,13 @@
     </select>
 
     <select id="getPageByDeptId" parameterType="map" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from sys_user where dept_id =#{deptId} or dept_id in
+        select <include refid="Base_Column_List" /> from sys_user where  (dept_id =#{deptId} or dept_id in
         (
         select id from sys_dept where level =
         (
         select concat(concat(level,"."),id) from sys_dept where id=#{deptId}
         )
-        or level like concat((select concat(concat(level,"."),id) from sys_dept where id=#{deptId}),".%")) order by dept_id ASC
+        or level like concat((select concat(concat(level,"."),id) from sys_dept where id=#{deptId}),".%")) )and status &lt;&gt; 2 order by dept_id ASC
     </select>
 
     <select id="getByIdList" parameterType="map" resultMap="BaseResultMap">

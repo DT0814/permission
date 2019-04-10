@@ -81,6 +81,7 @@ public class UserController {
         }
         String path = "signin.jsp";
         request.getRequestDispatcher(path).forward(request, response);
+        return;
     }
 
     @RequestMapping("/toUpdatePassword")

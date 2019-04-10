@@ -33,6 +33,7 @@ public class SysUser {
     private Date operateTime;
 
     private String operateIp;
+    private Integer adm=0;
 
     public Integer getId() {
         return id;
@@ -120,5 +121,13 @@ public class SysUser {
 
     public void setOperateIp(String operateIp) {
         this.operateIp = operateIp == null ? null : operateIp.trim();
+    }
+
+    public Integer getAdm() {
+        return adm;
+    }
+
+    public void setAdm(Integer adm) {
+        this.adm = adm;
     }
 }

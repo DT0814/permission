@@ -18,6 +18,6 @@ public interface FileDao {
     void insert(File bf);
     int delectFile(Integer id);
     void updateFile(File bf);
-
-    List<File> getFileByPidz(Map map);
+    List<File> getFileByPidz(int pid);
+  //  List<File> getFileByPidz(Map map);
 }

@@ -12,8 +12,10 @@
 	</select>
     <select id="getFileByPidz" parameterType="java.util.Map"
             resultType="com.mmall.model.File">
-		SELECT *,sf.id id,s.id fid,uid FROM sys_proj_filename sf LEFT JOIN sys_file s
-ON sf.id=s.pfid and uid=#{uid} WHERE sf.ptid=(SELECT ptid FROM sys_project WHERE sys_project.id=#{pid})  ORDER BY sf.id
+		SELECT *,sf.id id,s.id fid,uid FROM sys_proj_filename sf  LEFT JOIN (SELECT * from
+sys_file where pid =#{pid}) s
+ON sf.id=s.pfid WHERE sf.ptid=(SELECT ptid FROM sys_project WHERE sys_project.id=#{pid})
+  ORDER BY sf.id;
 	</select>
 
     <select id="getFileByPid" parameterType="int"

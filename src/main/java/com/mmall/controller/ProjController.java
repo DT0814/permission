@@ -92,7 +92,8 @@ public class ProjController {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
         if(user==null)
             return JsonData.fail("noligin");
-        List<File> list = fileService.getFileByPidz(id,user.getId());
+       // List<File> list = fileService.getFileByPidz(id,user.getId());
+        List<File> list = fileService.getFileByPidz(id);
         for (int i = 0; i < list.size(); i++) {
             String old = list.get(i).getLocation();
             if (null == old || old.indexOf(".") == -1) {
@@ -132,6 +133,7 @@ public class ProjController {
                 level1++;
             }
         }
+        System.out.println("level1:"+level1);
         List<SysProj> list = projService.getProjByLevel(level1);
         if (list != null || list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {

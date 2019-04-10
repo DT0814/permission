@@ -24,11 +24,11 @@ public class FileService{
     public List<File> getFileByPid(int pid) {
         ;        return  fileDao.getFileByPid(pid);
     }
-    public List<File> getFileByPidz(int pid,int uid) {
-        Map map=new HashMap();
-        map.put("pid",pid);
-        map.put("uid",uid);
-       return  fileDao.getFileByPidz(map);
+    public List<File> getFileByPidz(int pid) {
+        //Map map=new HashMap();
+        //map.put("pid",pid);
+        //map.put("uid",uid);
+       return  fileDao.getFileByPidz(pid);
     }
     public File upload(File f) {
         fileDao.insert(f);

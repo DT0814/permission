@@ -48,6 +48,8 @@ public class ProjController {
     @ResponseBody
     public JsonData showMyProj(HttpServletRequest request) {
         SysUser user = (SysUser) request.getSession().getAttribute("user");
+        if(user==null)
+            return JsonData.fail("nologin");
         List<SysProj> list = projService.getProjByUid(user.getId());
         return JsonData.success(list);
     }

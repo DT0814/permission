@@ -37,4 +37,20 @@ public class UserParam {
 
     @Length(min = 0, max = 200, message = "备注长度需要在200个字以内")
     private String remark = "";
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

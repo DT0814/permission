@@ -94,7 +94,10 @@ public class SysUserService {
     public List<SysUser> getAll() {
         return sysUserMapper.getAll();
     }
-
+    public void deleteUserByID(int id)
+    {
+        sysUserMapper.deleteByPrimaryKey(id);
+    }
     public void updateUser(SysUser sysUser)
     {
         sysUserMapper.updateUser(sysUser);

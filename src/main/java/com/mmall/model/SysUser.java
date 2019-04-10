@@ -33,7 +33,7 @@ public class SysUser {
     private Date operateTime;
 
     private String operateIp;
-    private Integer adm=0;
+    private Integer adm;
 
     public Integer getId() {
         return id;

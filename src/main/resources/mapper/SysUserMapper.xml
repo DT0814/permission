@@ -16,7 +16,7 @@
     </resultMap>
     <sql id="Base_Column_List" >
     id, username, telephone, mail, password, dept_id, status, remark, operator, operate_time, 
-    operate_ip
+    operate_ip,adm
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select

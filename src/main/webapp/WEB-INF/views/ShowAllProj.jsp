@@ -57,6 +57,9 @@
                         <template v-if="proj.isMy">
                             <button class="btn btn-danger" v-on:click="deleteC(proj)">删除</button>
                         </template>
+                        <template v-else-if="adm === '1'">
+                            <button class="btn btn-danger" v-on:click="deleteC(proj)">删除</button>
+                        </template>
                     </div>
                 </td>
             </tr>
@@ -106,9 +109,13 @@
             data: {
                 projs: {},
                 types: {},
+                adm: {},
             },
             mounted() {
                 this.$options.methods.topage(1);
+                this.adm = '${user.adm}';
+                console.log('${user.adm}');
+                console.log(1);
             },
             methods: {
                 updateModal: function (proj) {

@@ -9,8 +9,5 @@
         <module name="permission" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="permission" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

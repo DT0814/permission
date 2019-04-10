@@ -200,9 +200,9 @@
             <a class="green user-edit" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-pencil bigger-100"></i>
             </a>
-            <a class="red user-acl" href="#" data-id="{{id}}">
+           <%-- <a class="red user-acl" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-flag bigger-100"></i>
-            </a>
+            </a>--%>
         </div>
     </td>
 </tr>

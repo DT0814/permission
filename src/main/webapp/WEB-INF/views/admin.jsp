@@ -72,7 +72,7 @@
                 </a>
                 <b class="arrow"></b>
                 <ul class="submenu">
-                    <c:if test="${user_id == 1}">
+                    <c:if test="${user.adm == 1}">
                         <li class="">
                             <a class="popstyle" href="/ToProjTypeManage?userid=${user_id}" target="_blank">
                                 <i class="menu-icon fa fa-caret-right"></i>
